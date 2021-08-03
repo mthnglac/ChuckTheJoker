@@ -40,9 +40,9 @@ export const JokeScreen = observer(function JokeScreen() {
   const { jokeStore } = useStores()
   const { joke } = jokeStore
 
-   useEffect(() => {
-     jokeStore.fetchRandomJoke()
-   }, [])
+  useEffect(() => {
+    jokeStore.fetchRandomJoke()
+  }, [])
 
   return (
     <View testID="JokeScreen" style={FULL}>
