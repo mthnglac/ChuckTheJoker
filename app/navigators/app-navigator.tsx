@@ -7,7 +7,13 @@
 import React from "react"
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
-import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
+import {
+  WelcomeScreen,
+  DemoScreen,
+  DemoListScreen,
+  JokeScreen,
+  JokeListScreen
+} from "../screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -25,6 +31,8 @@ export type NavigatorParamList = {
   welcome: undefined
   demo: undefined
   demoList: undefined
+  joke: undefined
+  jokeList: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -41,6 +49,8 @@ const AppStack = () => {
       <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="demo" component={DemoScreen} />
       <Stack.Screen name="demoList" component={DemoListScreen} />
+      <Stack.Screen name="joke" component={JokeScreen} />
+      <Stack.Screen name="jokeList" component={JokeListScreen} />
     </Stack.Navigator>
   )
 }
