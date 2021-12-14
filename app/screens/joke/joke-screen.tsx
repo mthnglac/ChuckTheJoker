@@ -104,7 +104,7 @@ export const JokeScreen = observer(function JokeScreen() {
         <View style={LIST_CONTAINER}>
           <Image source={chuckNorris} style={CHUCK_NORRIS_IMAGE} />
           <Screen preset="scroll" style={JOKE_TEXT_CONTAINER} backgroundColor={color.transparent}>
-            <Text style={JOKE_TEXT}>{joke && joke.value}</Text>
+            <Text selectable={true} style={JOKE_TEXT}>{joke && joke.value}</Text>
           </Screen>
         </View>
         {isLoading ? (
