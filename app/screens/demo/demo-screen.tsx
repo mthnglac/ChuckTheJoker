@@ -155,21 +155,6 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             text={`To run Storybook, press ${platformCommand} or shake the device to show the developer menu, then select "Toggle Storybook"`}
           />
           <BulletItem text="Load up Reactotron!  You can inspect your app, view the events, interact, and so much more!" />
-          <View>
-            <Button
-              style={DEMO}
-              textStyle={DEMO_TEXT}
-              tx="demoScreen.reactotron"
-              onPress={demoReactotron}
-            />
-            <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
-          </View>
-          <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
-            tx="demoScreen.demoList"
-            onPress={() => navigation.navigate("demoList")}
-          />
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}

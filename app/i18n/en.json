@@ -17,7 +17,6 @@
     "title": "What’s In This Stack?",
     "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
     "reactotron": "Demo Reactotron",
-    "demoList": "Demo List",
     "joke": "Joke",
     "jokeList": "Joke List",
     "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
@@ -26,12 +25,12 @@
     "webReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
     "windowsReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running and reload app."
   },
-  "demoListScreen": {
-    "title": "Demo List"
-  },
   "jokeScreen": {
     "title": "CHUCK THE JOKER",
     "fetch": "Humor Me!",
+  },
+  "jokeListScreen": {
+    "title": "Joke List"
   },
   "errorScreen": {
     "title": "Something went wrong!",

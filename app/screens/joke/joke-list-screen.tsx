@@ -56,7 +56,7 @@ export const JokeListScreen = observer(function JokeListScreen() {
       <Wallpaper />
       <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
         <Header
-          headerTx="demoListScreen.title"
+          headerTx="jokeListScreen.title"
           leftIcon="back"
           onLeftPress={goBack}
           style={HEADER}
