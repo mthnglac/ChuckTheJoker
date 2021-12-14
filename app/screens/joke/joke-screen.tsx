@@ -61,7 +61,7 @@ const JOKE_BUTTON_TEXT: TextStyle = {
   color: "#F25B24",
 }
 const CHUCK_NORRIS_IMAGE: ImageStyle = {
-  flex: .6,
+  flex: 0.6,
   alignSelf: "center",
   marginHorizontal: spacing[2],
   width: 200,
@@ -94,9 +94,7 @@ export const JokeScreen = observer(function JokeScreen() {
         <View style={LIST_CONTAINER}>
           <Image source={chuckNorris} style={CHUCK_NORRIS_IMAGE} />
           <Screen preset="scroll" style={JOKE_TEXT_CONTAINER} backgroundColor={color.transparent}>
-            <Text style={JOKE_TEXT}>
-              {joke && joke.value}
-            </Text>
+            <Text style={JOKE_TEXT}>{joke && joke.value}</Text>
           </Screen>
         </View>
         <Button
