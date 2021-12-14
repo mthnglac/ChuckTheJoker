@@ -1,6 +1,6 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, Image, ImageStyle } from "react-native"
+import { ViewStyle, TextStyle, View, Image, ImageStyle, ActivityIndicator } from "react-native"
 import { Header, Screen, Text, Button, GradientBackground } from "../../components"
 import { useNavigation } from "@react-navigation/native"
 import { useStores } from "../../models"
@@ -60,6 +60,10 @@ const JOKE_BUTTON_TEXT: TextStyle = {
   fontSize: 20,
   color: "#F25B24",
 }
+const ACTIVITY_INDICATOR: ViewStyle = {
+  alignSelf: "center",
+  marginBottom: 50,
+}
 const CHUCK_NORRIS_IMAGE: ImageStyle = {
   flex: 0.6,
   alignSelf: "center",
@@ -77,8 +81,14 @@ export const JokeScreen = observer(function JokeScreen() {
   const { jokeStore } = useStores()
   const { joke } = jokeStore
 
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   useEffect(() => {
-    jokeStore.fetchRandomJoke()
+    if (!joke) {
+      setIsLoading(true)
+      jokeStore.fetchRandomJoke()
+      setIsLoading(false)
+    }
   }, [])
 
   return (
@@ -97,14 +107,20 @@ export const JokeScreen = observer(function JokeScreen() {
             <Text style={JOKE_TEXT}>{joke && joke.value}</Text>
           </Screen>
         </View>
-        <Button
-          tx="jokeScreen.fetch"
-          style={JOKE_BUTTON}
-          textStyle={JOKE_BUTTON_TEXT}
-          onPress={() => {
-            jokeStore.fetchRandomJoke()
-          }}
-        />
+        {isLoading ? (
+          <ActivityIndicator style={ACTIVITY_INDICATOR} />
+        ) : (
+          <Button
+            tx="jokeScreen.fetch"
+            style={JOKE_BUTTON}
+            textStyle={JOKE_BUTTON_TEXT}
+            onPress={() => {
+              setIsLoading(true)
+              jokeStore.fetchRandomJoke()
+              setIsLoading(false)
+            }}
+          />
+        )}
       </Screen>
     </View>
   )
