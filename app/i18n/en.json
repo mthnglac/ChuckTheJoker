@@ -8,8 +8,8 @@
     "invalidEmail": "Invalid email address."
   },
   "welcomeScreen": {
-    "poweredBy": "POWERED BY IGNITE",
-    "readyForLaunch": "Ready for launch.",
+    "poweredBy": "CHUCK THE JOKER",
+    "readyForLaunch": "Ready for humor?.",
     "continue": "CONTINUE"
   },
   "demoScreen": {
@@ -18,7 +18,6 @@
     "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
     "reactotron": "Demo Reactotron",
     "demoList": "Demo List",
-    "fetch": "Fetch My Joke!",
     "joke": "Joke",
     "jokeList": "Joke List",
     "androidReactotronHint": "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
@@ -29,6 +28,10 @@
   },
   "demoListScreen": {
     "title": "Demo List"
+  },
+  "jokeScreen": {
+    "title": "CHUCK THE JOKER",
+    "fetch": "Humor Me!",
   },
   "errorScreen": {
     "title": "Something went wrong!",
