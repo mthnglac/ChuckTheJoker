@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View } from "react-native"
-import { Header, Screen, Text, Button, Wallpaper } from "../../components"
+import { ViewStyle, TextStyle, View, Image, ImageStyle } from "react-native"
+import { Header, Screen, Text, Button, GradientBackground } from "../../components"
 import { useNavigation } from "@react-navigation/native"
 import { useStores } from "../../models"
 import { color, spacing } from "../../theme"
+export const chuckNorris = require("./chuck-norris.png")
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -18,19 +19,55 @@ const HEADER: TextStyle = {
   paddingTop: spacing[3],
 }
 const HEADER_TITLE: TextStyle = {
-  fontSize: 12,
+  fontSize: 14,
   fontWeight: "bold",
   letterSpacing: 1.5,
   lineHeight: 15,
   textAlign: "center",
+  color: "orange",
 }
 const LIST_CONTAINER: ViewStyle = {
-  alignItems: "center",
-  flexDirection: "row",
-  padding: 10,
+  flex: 1,
+  position: "relative",
+  paddingLeft: 10,
+  paddingRight: 10,
+  paddingTop: 10,
+  paddingBottom: 80,
 }
-const LIST_TEXT: TextStyle = {
-  marginLeft: 10,
+const JOKE_TEXT_CONTAINER: ViewStyle = {
+  flex: 1,
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 5,
+  backgroundColor: "#98A2AD",
+  borderRadius: 10,
+  borderWidth: 5,
+}
+const JOKE_TEXT: TextStyle = {
+  fontWeight: "600",
+  fontSize: 22,
+  color: "#040404",
+}
+const JOKE_BUTTON: ViewStyle = {
+  alignSelf: "center",
+  width: 300,
+  height: 50,
+  marginBottom: 50,
+  borderRadius: 10,
+  backgroundColor: "#1D1A18",
+}
+const JOKE_BUTTON_TEXT: TextStyle = {
+  fontSize: 20,
+  color: "#F25B24",
+}
+const CHUCK_NORRIS_IMAGE: ImageStyle = {
+  flex: .6,
+  alignSelf: "center",
+  marginHorizontal: spacing[2],
+  width: 200,
+  height: 200,
+  resizeMode: "contain",
+  marginBottom: 50,
 }
 
 export const JokeScreen = observer(function JokeScreen() {
@@ -46,20 +83,26 @@ export const JokeScreen = observer(function JokeScreen() {
 
   return (
     <View testID="JokeScreen" style={FULL}>
-      <Wallpaper />
+      <GradientBackground colors={["#7E4D2E", "#3E210F"]} />
       <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
         <Header
-          headerTx="demoListScreen.title"
-          leftIcon="back"
+          headerTx="jokeScreen.title"
           onLeftPress={goBack}
           style={HEADER}
           titleStyle={HEADER_TITLE}
         />
         <View style={LIST_CONTAINER}>
-          <Text style={LIST_TEXT}>{joke && joke.value}</Text>
+          <Image source={chuckNorris} style={CHUCK_NORRIS_IMAGE} />
+          <Screen preset="scroll" style={JOKE_TEXT_CONTAINER} backgroundColor={color.transparent}>
+            <Text style={JOKE_TEXT}>
+              {joke && joke.value}
+            </Text>
+          </Screen>
         </View>
         <Button
-          tx="demoScreen.fetch"
+          tx="jokeScreen.fetch"
+          style={JOKE_BUTTON}
+          textStyle={JOKE_BUTTON_TEXT}
           onPress={() => {
             jokeStore.fetchRandomJoke()
           }}
