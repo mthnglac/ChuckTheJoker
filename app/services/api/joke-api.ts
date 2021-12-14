@@ -1,8 +1,7 @@
 import { ApiResponse } from "apisauce"
 import { Api } from "./api"
-import { GetJokeResult, GetJokesResult } from "./api.types"
-import { Joke } from "../../models/joke/joke"
 import { getGeneralApiProblem } from "./api-problem"
+import * as Types from "./api.types"
 
 const API_PAGE_SIZE = 10
 
@@ -13,27 +12,28 @@ export class JokeApi {
     this.api = api
   }
 
-  async fetchJokesByQuery(query: string): Promise<GetJokesResult> {
+  async fetchJokesByQuery(query: string): Promise<Types.GetJokesResult> {
     const urlQuery = `search?query=${query}`
 
+    // make the api call
+    const response: ApiResponse<any> = await this.api.apisauce.get(urlQuery, {
+      amount: API_PAGE_SIZE,
+    })
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    const convertJoke = (raw: Types.Joke) => {
+      return {
+        id: raw.id,
+        value: raw.value,
+      }
+    }
+
     try {
-      // make the api call
-      const response: ApiResponse<any> = await this.api.apisauce.get(urlQuery, {
-        amount: API_PAGE_SIZE,
-      })
-
-      // the typical ways to die when calling an api
-      if (!response.ok) {
-        const problem = getGeneralApiProblem(response)
-        if (problem) return problem
-      }
-
-      const convertJoke = (raw: any) => {
-        return {
-          id: raw.id,
-          value: raw.value,
-        }
-      }
       const jokes = response.data.result
       const convertedJokes = jokes.map(convertJoke)
 
@@ -44,23 +44,23 @@ export class JokeApi {
     }
   }
 
-  async fetchRandomJoke(): Promise<GetJokeResult> {
+  async fetchRandomJoke(): Promise<Types.GetJokeResult> {
     const urlQuery = "/random"
 
+    const response: ApiResponse<any> = await this.api.apisauce.get(urlQuery)
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    const convertedJoke: Types.Joke = {
+      id: response.data.id,
+      value: response.data.value,
+    }
+
     try {
-      const response: ApiResponse<any> = await this.api.apisauce.get(urlQuery)
-
-      // the typical ways to die when calling an api
-      if (!response.ok) {
-        const problem = getGeneralApiProblem(response)
-        if (problem) return problem
-      }
-
-      const convertedJoke: Joke = {
-        id: response.data.id,
-        value: response.data.value,
-      }
-
       return { kind: "ok", joke: convertedJoke }
     } catch (e) {
       __DEV__ && console.tron.log(e.message)
@@ -68,19 +68,19 @@ export class JokeApi {
     }
   }
 
-  async fetchJokeByCategory(category: string): Promise<GetJokeResult> {
+  async fetchJokeByCategory(category: string): Promise<Types.GetJokeResult> {
     const urlQuery = `/random?category=${category}`
 
+    const response: ApiResponse<any> = await this.api.apisauce.get(urlQuery)
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
     try {
-      const response: ApiResponse<any> = await this.api.apisauce.get(urlQuery)
-
-      // the typical ways to die when calling an api
-      if (!response.ok) {
-        const problem = getGeneralApiProblem(response)
-        if (problem) return problem
-      }
-
-      const convertedJoke: Joke = {
+      const convertedJoke: Types.Joke = {
         id: response.data.id,
         value: response.data.value,
       }
