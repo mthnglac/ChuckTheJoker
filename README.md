@@ -2,8 +2,6 @@
 
 [![CircleCI](https://circleci.com/gh/infinitered/ignite.svg?style=svg)](https://circleci.com/gh/infinitered/ignite)
 
-## The latest and greatest boilerplate for Infinite Red opinions
-
 This is the mobile app for fun. App uses [joke API](https://api.chucknorris.io/) and generate you some Chuck Norris jokes.
 
 ## Screenshot:
