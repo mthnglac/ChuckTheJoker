@@ -98,6 +98,8 @@ export const JokeScreen = observer(function JokeScreen() {
   useEffect(() => {
     if (!joke) {
       jokeStore.fetchRandomJoke()
+    } else {
+      jokeStore.setLoading(false);
     }
   }, [])
 
