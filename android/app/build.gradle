@@ -137,8 +137,8 @@ android {
         applicationId "com.chuckthejoker"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2.0"
     }
     splits {
         abi {
@@ -182,7 +182,7 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
             ndk {
-              debugSymbolLevel 'SYMBOL_TABLE'
+              debugSymbolLevel 'FULL'
             }
         }
     }
