@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, TextStyle, View, Image, ImageStyle, ActivityIndicator } from "react-native"
+import {
+  ViewStyle,
+  TextStyle,
+  View,
+  Image,
+  ImageStyle,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native"
 import { Header, Screen, Text, Button, GradientBackground } from "../../components"
 import { useNavigation } from "@react-navigation/native"
 import { useStores } from "../../models"
@@ -49,7 +57,13 @@ const JOKE_TEXT: TextStyle = {
   color: "#040404",
 }
 const JOKE_BUTTON: ViewStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-evenly",
   alignSelf: "center",
+  alignItems: "center",
+  borderWidth: 1,
+  borderColor: "#666",
   width: 300,
   height: 50,
   marginBottom: 50,
@@ -57,12 +71,12 @@ const JOKE_BUTTON: ViewStyle = {
   backgroundColor: "#1D1A18",
 }
 const JOKE_BUTTON_TEXT: TextStyle = {
+  fontWeight: "bold",
   fontSize: 20,
   color: "#F25B24",
 }
 const ACTIVITY_INDICATOR: ViewStyle = {
   alignSelf: "center",
-  marginBottom: 50,
 }
 const CHUCK_NORRIS_IMAGE: ImageStyle = {
   flex: 0.6,
@@ -79,15 +93,11 @@ export const JokeScreen = observer(function JokeScreen() {
   const goBack = () => navigation.goBack()
 
   const { jokeStore } = useStores()
-  const { joke } = jokeStore
-
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { joke, loading } = jokeStore
 
   useEffect(() => {
     if (!joke) {
-      setIsLoading(true)
       jokeStore.fetchRandomJoke()
-      setIsLoading(false)
     }
   }, [])
 
@@ -104,23 +114,20 @@ export const JokeScreen = observer(function JokeScreen() {
         <View style={LIST_CONTAINER}>
           <Image source={chuckNorris} style={CHUCK_NORRIS_IMAGE} />
           <Screen preset="scroll" style={JOKE_TEXT_CONTAINER} backgroundColor={color.transparent}>
-            <Text selectable={true} style={JOKE_TEXT}>{joke && joke.value}</Text>
+            <Text selectable={true} style={JOKE_TEXT}>
+              {joke && joke.value}
+            </Text>
           </Screen>
         </View>
-        {isLoading ? (
-          <ActivityIndicator style={ACTIVITY_INDICATOR} />
-        ) : (
-          <Button
-            tx="jokeScreen.fetch"
-            style={JOKE_BUTTON}
-            textStyle={JOKE_BUTTON_TEXT}
-            onPress={() => {
-              setIsLoading(true)
-              jokeStore.fetchRandomJoke()
-              setIsLoading(false)
-            }}
-          />
-        )}
+        <TouchableOpacity onPress={() => jokeStore.fetchRandomJoke()} disabled={loading}>
+          <View style={JOKE_BUTTON}>
+            {loading ? (
+              <ActivityIndicator size="large" color="#35AADD" style={ACTIVITY_INDICATOR} />
+            ) : (
+              <Text style={JOKE_BUTTON_TEXT} tx={"jokeScreen.fetch"} />
+            )}
+          </View>
+        </TouchableOpacity>
       </Screen>
     </View>
   )

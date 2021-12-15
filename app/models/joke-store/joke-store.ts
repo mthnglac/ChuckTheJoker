@@ -11,8 +11,14 @@ export const JokeStoreModel = types
   .props({
     joke: types.maybe(JokeModel),
     jokes: types.optional(types.array(JokeModel), []),
+    loading: types.optional(types.boolean, false),
   })
   .extend(withEnvironment)
+  .actions((self) => ({
+    setLoading: (isLoading: boolean) => {
+      self.loading = isLoading
+    },
+  }))
   .actions((self) => ({
     saveJoke: (jokeSnapshot: JokeSnapshot) => {
       self.joke = jokeSnapshot
@@ -25,11 +31,13 @@ export const JokeStoreModel = types
   }))
   .actions((self) => ({
     fetchRandomJoke: flow(function* () {
+      self.setLoading(true)
       const jokeApi = new JokeApi(self.environment.api)
       const result = yield jokeApi.fetchRandomJoke()
 
       if (result.kind === "ok") {
         self.saveJoke(result.joke)
+        self.setLoading(false)
       } else {
         __DEV__ && console.tron.log(result.kind)
       }
@@ -37,11 +45,13 @@ export const JokeStoreModel = types
   }))
   .actions((self) => ({
     fetchJokeByCategory: flow(function* (category: string) {
+      self.setLoading(true)
       const jokeApi = new JokeApi(self.environment.api)
       const result = yield jokeApi.fetchJokeByCategory(category)
 
       if (result.kind === "ok") {
         self.saveJoke(result.joke)
+        self.setLoading(false)
       } else {
         __DEV__ && console.tron.log(result.kind)
       }
@@ -49,11 +59,13 @@ export const JokeStoreModel = types
   }))
   .actions((self) => ({
     fetchJokesByQuery: flow(function* (query: string) {
+      self.setLoading(true)
       const jokeApi = new JokeApi(self.environment.api)
       const result = yield jokeApi.fetchJokesByQuery(query)
 
       if (result.kind === "ok") {
         self.saveJokes(result.jokes)
+        self.setLoading(false)
       } else {
         __DEV__ && console.tron.log(result.kind)
       }
