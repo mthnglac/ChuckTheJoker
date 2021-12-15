@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/infinitered/ignite.svg?style=svg)](https://circleci.com/gh/infinitered/ignite)
 
-This is the mobile app for fun. App uses [joke API](https://api.chucknorris.io/) and generate you some Chuck Norris jokes.
+This is a mobile app for fun. App uses [joke API](https://api.chucknorris.io/) and generate you some Chuck Norris jokes.
 
 ## Screenshot:
 <img src="assets/chuck-demo.jpeg" width ="250"/>
