@@ -19,6 +19,7 @@ import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { RootStore, RootStoreProvider, setupRootStore } from "./models"
 // import { ToggleStorybook } from "../storybook/toggle-storybook"
 import { ErrorBoundary } from "./screens/error/error-boundary"
+import SplashScreen from "react-native-splash-screen"
 
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
@@ -43,6 +44,10 @@ function App() {
       await initFonts() // expo
       setupRootStore().then(setRootStore)
     })()
+
+    setTimeout(() => {
+      SplashScreen.hide()
+    }, 500)
   }, [])
 
   // Before we show the app, we have to wait for our state to be ready.

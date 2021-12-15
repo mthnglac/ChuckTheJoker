@@ -1,4 +1,6 @@
 
+include ':react-native-splash-screen'
+project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')
 // React Native Colo Loco autolinks native files colocated next to your JS files
 // More info here: https://github.com/jamonholmgren/react-native-colo-loco
 apply from: '../node_modules/react-native-colo-loco/scripts/android.groovy'
