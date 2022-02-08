@@ -1,5 +1,7 @@
-import React, { useEffect } from "react"
+import React, { FC, useEffect } from "react"
 import { FlatList, TextStyle, View, ViewStyle } from "react-native"
+import { StackScreenProps } from "@react-navigation/stack"
+import { NavigatorParamList } from "../../navigators"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Header, Screen, Text, Wallpaper } from "../../components"
@@ -36,43 +38,45 @@ const FLAT_LIST: ViewStyle = {
   paddingHorizontal: spacing[4],
 }
 
-export const JokeListScreen = observer(function JokeListScreen() {
-  const navigation = useNavigation()
-  const goBack = () => navigation.goBack()
+export const JokeListScreen: FC<StackScreenProps<NavigatorParamList, "jokeList">> = observer(
+  function JokeListScreen() {
+    const navigation = useNavigation()
+    const goBack = () => navigation.goBack()
 
-  const { jokeStore } = useStores()
-  const { jokes } = jokeStore
+    const { jokeStore } = useStores()
+    const { jokes } = jokeStore
 
-  useEffect(() => {
-    async function fetchData() {
-      await jokeStore.fetchJokesByQuery("animal")
-    }
+    useEffect(() => {
+      async function fetchData() {
+        await jokeStore.fetchJokesByQuery("animal")
+      }
 
-    fetchData()
-  }, [])
+      fetchData()
+    }, [])
 
-  return (
-    <View testID="JokeListScreen" style={FULL}>
-      <Wallpaper />
-      <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
-        <Header
-          headerTx="jokeListScreen.title"
-          leftIcon="back"
-          onLeftPress={goBack}
-          style={HEADER}
-          titleStyle={HEADER_TITLE}
-        />
-        <FlatList
-          contentContainerStyle={FLAT_LIST}
-          data={[...jokes]}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => (
-            <View style={LIST_CONTAINER}>
-              <Text style={LIST_TEXT}>{item.value}</Text>
-            </View>
-          )}
-        />
-      </Screen>
-    </View>
-  )
-})
+    return (
+      <View testID="JokeListScreen" style={FULL}>
+        <Wallpaper />
+        <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+          <Header
+            headerTx="jokeListScreen.title"
+            leftIcon="back"
+            onLeftPress={goBack}
+            style={HEADER}
+            titleStyle={HEADER_TITLE}
+          />
+          <FlatList
+            contentContainerStyle={FLAT_LIST}
+            data={[...jokes]}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <View style={LIST_CONTAINER}>
+                <Text style={LIST_TEXT}>{item.value}</Text>
+              </View>
+            )}
+          />
+        </Screen>
+      </View>
+    )
+  },
+)

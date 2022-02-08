@@ -1,5 +1,7 @@
-import React, { useEffect } from "react"
+import React, { FC, useEffect } from "react"
 import { observer } from "mobx-react-lite"
+import { StackScreenProps } from "@react-navigation/stack"
+import { NavigatorParamList } from "../../navigators"
 import {
   ViewStyle,
   TextStyle,
@@ -88,49 +90,51 @@ const CHUCK_NORRIS_IMAGE: ImageStyle = {
   marginBottom: 50,
 }
 
-export const JokeScreen = observer(function JokeScreen() {
-  const navigation = useNavigation()
-  const goBack = () => navigation.goBack()
+export const JokeScreen: FC<StackScreenProps<NavigatorParamList, "joke">> = observer(
+  function JokeScreen() {
+    const navigation = useNavigation()
+    const goBack = () => navigation.goBack()
 
-  const { jokeStore } = useStores()
-  const { joke, loading } = jokeStore
+    const { jokeStore } = useStores()
+    const { joke, loading } = jokeStore
 
-  useEffect(() => {
-    if (!joke) {
-      jokeStore.fetchRandomJoke()
-    } else {
-      jokeStore.setLoading(false);
-    }
-  }, [])
+    useEffect(() => {
+      if (!joke) {
+        jokeStore.fetchRandomJoke()
+      } else {
+        jokeStore.setLoading(false)
+      }
+    }, [])
 
-  return (
-    <View testID="JokeScreen" style={FULL}>
-      <GradientBackground colors={["#7E4D2E", "#3E210F"]} />
-      <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
-        <Header
-          headerTx="jokeScreen.title"
-          onLeftPress={goBack}
-          style={HEADER}
-          titleStyle={HEADER_TITLE}
-        />
-        <View style={LIST_CONTAINER}>
-          <Image source={chuckNorris} style={CHUCK_NORRIS_IMAGE} />
-          <Screen preset="scroll" style={JOKE_TEXT_CONTAINER} backgroundColor={color.transparent}>
-            <Text selectable={true} style={JOKE_TEXT}>
-              {joke && joke.value}
-            </Text>
-          </Screen>
-        </View>
-        <TouchableOpacity onPress={() => jokeStore.fetchRandomJoke()} disabled={loading}>
-          <View style={JOKE_BUTTON}>
-            {loading ? (
-              <ActivityIndicator size="large" color="#35AADD" style={ACTIVITY_INDICATOR} />
-            ) : (
-              <Text style={JOKE_BUTTON_TEXT} tx={"jokeScreen.fetch"} />
-            )}
+    return (
+      <View testID="JokeScreen" style={FULL}>
+        <GradientBackground colors={["#7E4D2E", "#3E210F"]} />
+        <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+          <Header
+            headerTx="jokeScreen.title"
+            onLeftPress={goBack}
+            style={HEADER}
+            titleStyle={HEADER_TITLE}
+          />
+          <View style={LIST_CONTAINER}>
+            <Image source={chuckNorris} style={CHUCK_NORRIS_IMAGE} />
+            <Screen preset="scroll" style={JOKE_TEXT_CONTAINER} backgroundColor={color.transparent}>
+              <Text selectable={true} style={JOKE_TEXT}>
+                {joke && joke.value}
+              </Text>
+            </Screen>
           </View>
-        </TouchableOpacity>
-      </Screen>
-    </View>
-  )
-})
+          <TouchableOpacity onPress={() => jokeStore.fetchRandomJoke()} disabled={loading}>
+            <View style={JOKE_BUTTON}>
+              {loading ? (
+                <ActivityIndicator size="large" color="#35AADD" style={ACTIVITY_INDICATOR} />
+              ) : (
+                <Text style={JOKE_BUTTON_TEXT} tx={"jokeScreen.fetch"} />
+              )}
+            </View>
+          </TouchableOpacity>
+        </Screen>
+      </View>
+    )
+  },
+)

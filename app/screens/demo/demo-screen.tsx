@@ -85,6 +85,15 @@ const platformCommand = Platform.select({
   android: "Cmd/Ctrl + M",
 })
 
+// STOP! READ ME FIRST!
+// To fix the TS error below, you'll need to add the following things in your navigation config:
+// - Add `<%= props.camelCaseName %>: undefined` to NavigatorParamList
+// - Import your screen, and add it to the stack:
+//     `<Stack.Screen name="<%= props.camelCaseName %>" component={<%= props.pascalCaseName%>Screen} />`
+// Hint: Look for the 🔥!
+
+// REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
+// @ts-ignore
 export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack()
